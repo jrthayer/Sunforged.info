@@ -1,0 +1,57 @@
+/* Visuals */
+body {
+    background-color: black;
+}
+
+.border-gold {
+    border: solid 1px #d49240;
+}
+
+/* Layout */
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+.hero {
+    position: relative;
+    height: calc(100vh - 2rem);
+    margin: 1rem;
+    text-align: center;
+}
+
+.hero__outline {
+    position: absolute;
+    z-index: -1;
+}
+
+.hero__outline:nth-of-type(1) {
+    height: calc(100% - 2rem);
+    width: calc(100%);
+    margin: 1rem 0;
+}
+
+.hero__outline:nth-of-type(2) {
+    height: calc(100%);
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
+}
+
+.hero__img {
+    padding: 2rem;
+    padding-top: 20vh;
+}
+
+/* Media Queries */
+@media (orientation: landscape) {
+    .hero__img {
+        width: auto;
+        max-height: 100%;
+    }
+}

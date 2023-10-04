@@ -5,7 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sunforged</title>
         <link rel="stylesheet" href="styles.css" />
-        <link rel="icon" type="image/png" href="images/favicon.png" />
+        <link rel="icon" type="image/png" href="images/favicon.webp" />
     </head>
-    <body></body>
+    <body>
+        <div class="hero">
+            <div class="hero__outline border-gold"></div>
+            <div class="hero__outline border-gold"></div>
+            <img
+                src="images/hero__img-small.png"
+                srcset="
+                    images/hero__img-large.webp  875w,
+                    images/hero__img-medium.webp 450w,
+                    images/hero__img-small.webp  250w
+                "
+                sizes="(min-width: 1200px) and (min-height: 800px) 875px,
+                (min-width: 700px) and (min-height: 300px) 450px,
+                250px"
+                alt=""
+                class="hero__img"
+            />
+        </div>
+    </body>
 </html>
