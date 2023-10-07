@@ -1,17 +1,34 @@
+/* 
+    Table of Contents
+    =============================
+    1. Layout Utility
+    2. Visual Utility
+    3. Visuals
+    4. Layout
+        4.1 Hero
+        4.2 Hero Social Links
+    5. Components
+        5.1 Floating Button
+        5.2 Fancy Button
+        5.3 Social Links
+    6. State Classes
+    7. Media Queries
+*/
+
 :root {
     --color-primary: #d49240;
     --color-secondary: #e6b884;
 }
 
 /* ==================================================== */
-/* Layout Utility */
+/* 1. Layout Utility */
 /* ==================================================== */
 .center {
     margin: 0 auto;
 }
 
 /* ==================================================== */
-/* Visual Utility */
+/* 2. Visual Utility */
 /* ==================================================== */
 .border-primary {
     border: solid 1px var(--color-primary);
@@ -33,6 +50,10 @@
     background: transparent;
 }
 
+.background-black {
+    background-color: black;
+}
+
 /* ==================================================== */
 /* Visuals */
 /* ==================================================== */
@@ -43,10 +64,13 @@ body {
 /* ==================================================== */
 /* Layout */
 /* ==================================================== */
+
+/* 4.1 Hero */
+/* ====================== */
 .hero {
     position: relative;
-    height: calc(100vh - 2rem);
     min-height: 350px;
+    height: calc(100vh - 2rem);
     margin: 1rem;
     text-align: center;
 }
@@ -69,9 +93,9 @@ body {
 }
 
 .hero__img {
+    display: block;
     padding: 2rem;
     padding-top: max(20vh, 50px);
-    display: block;
     margin: 0 auto;
 }
 
@@ -81,33 +105,37 @@ body {
 }
 
 /* ==================================================== */
-/* Components */
+/* 5. Components */
 /* ==================================================== */
 
-/* Floating Button */
+/* 5.1 Floating Button */
+/* ====================== */
 .floating-button {
-    width: 50px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
     height: 50px;
+    width: 50px;
+
+    border: solid 1px var(--color-primary);
     border-radius: 50%;
     margin: 3rem;
     background-color: black;
-    position: fixed;
-    bottom: 0;
-    right: 0;
 
-    border: solid 1px var(--color-primary);
-
-    display: flex;
+    isolation: isolate;
+    z-index: 1;
 }
 
 .floating-button__center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     align-self: center;
-    margin: 0 auto;
     height: 18px;
     width: calc(50px - 1rem - 2px - 10px);
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    margin: 0 auto;
 }
 
 .floating-button__center--line {
@@ -115,11 +143,12 @@ body {
     background-color: var(--color-primary);
 }
 
-/* Fancy Button */
+/* 5.2 Fancy Button */
+/* ====================== */
 .fancy-button {
+    display: inline-block;
     width: fit-content;
     margin: 0.5rem;
-    display: inline-block;
 }
 
 .fancy-button__decoration {
@@ -130,13 +159,13 @@ body {
 
 .fancy-button__core {
     display: block;
-    padding: 0.4rem 1.5rem;
     width: 100%;
-    outline: none;
+    padding: 0.4rem 1.5rem;
 
     font-size: 1rem;
-    letter-spacing: 0.25rem;
     text-decoration: none;
+    letter-spacing: 0.25rem;
+    outline: none;
 }
 
 .fancy-button__decoration:nth-of-type(1) {
@@ -153,9 +182,9 @@ body {
 }
 
 .fancy-button:hover * {
-    cursor: pointer;
-    color: var(--color-primary) !important;
     border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    cursor: pointer;
     transition: all 0.5s;
 }
 
@@ -163,11 +192,57 @@ body {
     margin: 0 0.5rem;
 }
 
-/* Media Queries */
+/* 5.3 Social Links */
+/* ====================== */
+.social-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
+
+    font-size: 2rem;
+
+    background-color: hsla(0, 0%, 0%, 0.99);
+
+    isolation: isolate;
+}
+
+.social-links a {
+    width: calc(100% - 2rem);
+    margin: 1rem;
+    color: var(--color-primary);
+    overflow: hidden;
+}
+
+.social-links a:hover {
+    padding-left: 2rem;
+}
+
+.social-links i::before {
+    padding-right: 1.5rem;
+}
+
+/* ==================================================== */
+/* 6. State Classes*/
+/* ==================================================== */
+.flex {
+    display: flex;
+}
+
+/* ==================================================== */
+/* 7. Media Queries */
+/* ==================================================== */
 @media (orientation: landscape) {
     .hero__img {
-        width: auto;
         max-height: 100%;
+        width: auto;
     }
 }
 
@@ -177,16 +252,12 @@ body {
     }
 
     .fancy-button__core {
-        font-size: 1.25rem;
         padding: 0.5rem 2rem;
+        font-size: 1.25rem;
     }
 
     .hero__playlist {
         font-size: 1.75rem;
-    }
-
-    .floating-button:first-of-type {
-        display: none;
     }
 }
 
@@ -196,11 +267,50 @@ body {
     }
 
     .fancy-button__core {
-        font-size: 1.5rem;
         padding: 0.5rem 3rem;
+        font-size: 1.5rem;
     }
 
     .hero__playlist {
         font-size: 2.5rem;
+    }
+
+    .floating-button:first-of-type {
+        display: none;
+    }
+
+    .social-links {
+        position: absolute;
+
+        display: flex;
+        align-items: baseline;
+
+        height: calc(100% - 4rem);
+        width: fit-content;
+        margin: 2rem;
+
+        background-color: transparent;
+    }
+
+    .social-links a {
+        width: 50px;
+
+        text-align: left;
+        overflow: hidden;
+    }
+
+    .social-links a:hover {
+        width: 100%;
+
+        /* Needed to offset mobile hover selector */
+        padding: 0rem;
+
+        transition-duration: 0.5s;
+        transition-property: color, width;
+        transition-timing-function: ease-out;
+    }
+
+    .social-links i::before {
+        padding-right: 1.5rem;
     }
 }
