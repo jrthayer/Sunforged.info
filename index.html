@@ -3,12 +3,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Tab Settings -->
         <title>Sunforged</title>
+        <link rel="icon" type="image/png" href="images/favicon.webp" />
+
+        <!-- CSS stylesheets -->
         <link rel="stylesheet" href="reset.css" />
         <link rel="stylesheet" href="styles.css" />
-        <link rel="icon" type="image/png" href="images/favicon.webp" />
+
+        <!-- Font Awesome Icons -->
+        <script
+            src="https://kit.fontawesome.com/f46f49412e.js"
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
+        <div class="floating-button">
+            <div class="floating-button__center">
+                <span class="floating-button__center--line"></span>
+                <span class="floating-button__center--line"></span>
+                <span class="floating-button__center--line"></span>
+            </div>
+        </div>
         <div class="hero">
             <div class="hero__outline border-primary"></div>
             <div class="hero__outline border-primary"></div>
@@ -19,25 +36,49 @@
                     images/hero__img-medium.webp 450w,
                     images/hero__img-small.webp  250w
                 "
-                sizes="(min-width: 1200px) and (min-height: 800px) 875px,
-                (min-width: 700px) and (min-height: 400px) 450px,
+                sizes="(min-width: 1200px) 875px,
+                (min-width: 700px)  450px,
                 250px"
                 alt=""
                 class="hero__img"
             />
-
-            <div class="fancy-button center">
-                <div class="fancy-button__decoration border-secondary"></div>
-                <a
-                    href="https://www.youtube.com/playlist?list=PLBRWWri3FMZ266GNQWhS0Fz9kLzE56VnU"
-                    class="fancy-button__core border-secondary color-secondary background-transparent"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Playlist
-                </a>
-                <div class="fancy-button__decoration border-secondary"></div>
+            <div class="hero__playlist-container">
+                <div class="fancy-button center">
+                    <div
+                        class="fancy-button__decoration border-secondary"
+                    ></div>
+                    <a
+                        href="https://www.youtube.com/playlist?list=PLBRWWri3FMZ266GNQWhS0Fz9kLzE56VnU"
+                        class="fancy-button__core border-secondary color-secondary background-transparent"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <i class="fab fa-youtube"></i>
+                        YouTube
+                    </a>
+                    <div
+                        class="fancy-button__decoration border-secondary"
+                    ></div>
+                </div>
+                <div class="fancy-button center">
+                    <div
+                        class="fancy-button__decoration border-secondary"
+                    ></div>
+                    <a
+                        href="https://www.twitch.tv/videos/1942442854?collection=6dqlCPdDhBdHaA"
+                        class="fancy-button__core border-secondary color-secondary background-transparent"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <i class="fab fa-twitch"></i>
+                        Twitch
+                    </a>
+                    <div
+                        class="fancy-button__decoration border-secondary"
+                    ></div>
+                </div>
             </div>
         </div>
+        <div class="hero"></div>
     </body>
 </html>

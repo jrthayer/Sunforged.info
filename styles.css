@@ -3,12 +3,16 @@
     --color-secondary: #e6b884;
 }
 
+/* ==================================================== */
 /* Layout Utility */
+/* ==================================================== */
 .center {
     margin: 0 auto;
 }
 
+/* ==================================================== */
 /* Visual Utility */
+/* ==================================================== */
 .border-primary {
     border: solid 1px var(--color-primary);
 }
@@ -29,15 +33,20 @@
     background: transparent;
 }
 
+/* ==================================================== */
 /* Visuals */
+/* ==================================================== */
 body {
     background-color: black;
 }
 
+/* ==================================================== */
 /* Layout */
+/* ==================================================== */
 .hero {
     position: relative;
     height: calc(100vh - 2rem);
+    min-height: 350px;
     margin: 1rem;
     text-align: center;
 }
@@ -61,12 +70,56 @@ body {
 
 .hero__img {
     padding: 2rem;
-    padding-top: 20vh;
-    display: inline-block;
+    padding-top: max(20vh, 50px);
+    display: block;
+    margin: 0 auto;
 }
 
+.hero__playlist-container {
+    width: calc(100% - 4rem);
+    margin: 0 auto;
+}
+
+/* ==================================================== */
+/* Components */
+/* ==================================================== */
+
+/* Floating Button */
+.floating-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 3rem;
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    border: solid 1px var(--color-primary);
+
+    display: flex;
+}
+
+.floating-button__center {
+    align-self: center;
+    margin: 0 auto;
+    height: 18px;
+    width: calc(50px - 1rem - 2px - 10px);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.floating-button__center--line {
+    height: 2.5px;
+    background-color: var(--color-primary);
+}
+
+/* Fancy Button */
 .fancy-button {
     width: fit-content;
+    margin: 0.5rem;
+    display: inline-block;
 }
 
 .fancy-button__decoration {
@@ -82,7 +135,6 @@ body {
     outline: none;
 
     font-size: 1rem;
-    text-transform: uppercase;
     letter-spacing: 0.25rem;
     text-decoration: none;
 }
@@ -113,13 +165,6 @@ body {
 
 /* Media Queries */
 @media (orientation: landscape) {
-    @media (max-height: 500px) {
-        .hero__img {
-            padding: 0;
-            padding-top: 10vh;
-        }
-    }
-
     .hero__img {
         width: auto;
         max-height: 100%;
@@ -127,15 +172,35 @@ body {
 }
 
 @media (min-width: 700px) {
+    .hero {
+        min-height: 500px;
+    }
+
     .fancy-button__core {
         font-size: 1.25rem;
         padding: 0.5rem 2rem;
     }
+
+    .hero__playlist {
+        font-size: 1.75rem;
+    }
+
+    .floating-button:first-of-type {
+        display: none;
+    }
 }
 
 @media (min-width: 1200px) {
+    .hero {
+        min-height: 750px;
+    }
+
     .fancy-button__core {
         font-size: 1.5rem;
         padding: 0.5rem 3rem;
+    }
+
+    .hero__playlist {
+        font-size: 2.5rem;
     }
 }
