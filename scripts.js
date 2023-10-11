@@ -1,8 +1,19 @@
+const nameContainer = document.querySelector(".party-section__names menu");
+let parentGap = window.getComputedStyle(nameContainer).getPropertyValue("gap");
+parentGap = Number(parentGap.replace(/px$/, ""));
+let nameHeight;
+
+let slider = 0;
+let isMoving = false;
+let selectedIndex = 0;
+let prevIndex = 0;
+let nameContainerLength = 0;
+const visibleNames = 5;
+const numOfDuplicates = Math.floor(visibleNames / 2);
+
 document.querySelector("#test").addEventListener("click", () => {
     document.querySelector(".social-links").classList.toggle("flex");
 });
-
-console.log(document.querySelectorAll(".line a"));
 
 document
     .querySelectorAll(".party-section__names a")
@@ -21,13 +32,11 @@ document
     });
 
 // script.js
-document.addEventListener("DOMContentLoaded", function () {});
-
-// script.js
 document.addEventListener("DOMContentLoaded", function () {
     const nameContainer = document.querySelector(".party-section__names menu");
     const parentContainer = document.querySelector(".party-section__names");
-    const numberOfNames = 5;
+    // Needs to be odd
+
     // Sample names (you can replace these with your data)
     const characterData = [
         "Carlisle",
@@ -39,99 +48,145 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add more names as needed
     ];
 
-    let slider = 0;
+    //Insert Duplicate Names at beginning
+    for (let x = numOfDuplicates; x > 0; x--) {
+        let arrayEnd = characterData.length;
+        createdName = createNameElement(
+            characterData[arrayEnd - x],
+            nameContainerLength
+        );
+        nameContainer.appendChild(createdName);
+        nameContainerLength++;
+    }
 
     //Create names elements
-    characterData.forEach((name, index, array) => {
-        const nameElement = document.createElement("a");
-        nameElement.textContent = name;
-        nameElement.dataset.index = index;
-        nameElement.addEventListener("click", function () {
-            // Scroll to the center of the clicked name
+    characterData.forEach((name) => {
+        let createdName = createNameElement(name, nameContainerLength);
 
-            // Calculate scroll position of clicked name
-            // prettier-ignore
-            // const scrollY = this.offsetTop - parentContainer.offsetHeight / 2 + this.offsetHeight / 2;
+        if (nameContainerLength === numOfDuplicates) {
+            createdName.classList.add("selected");
+            selectedIndex = nameContainerLength;
+            prevIndex = selectedIndex;
+        }
 
-            // scrollToCustom(parentContainer, scrollY, 1000);
-            // parentContainer.scrollTo({
-            //     top: scrollY,
-            //     behavior: "smooth",
-            // });
-            setSelectedState(this, numberOfNames);
-
-            slider -= 100;
-            nameContainer.style.transform = `translateY(${slider}px)`;
-
-            //prettier-ignore
-            document.querySelector(".party-section__image").src = `./images/${this.textContent}.png`;
-        });
-
-        addedElement = nameContainer.appendChild(nameElement);
+        nameContainer.appendChild(createdName);
+        nameContainerLength++;
     });
 
-    const nameElements = document.querySelectorAll(
-        ".party-section__names menu a"
-    );
+    characterData.forEach((name, index) => {
+        if (index < visibleNames) {
+            let createdName = createNameElement(name, nameContainerLength);
 
-    let parentGap = window
-        .getComputedStyle(nameContainer)
-        .getPropertyValue("gap");
-    parentGap = Number(parentGap.replace(/px$/, ""));
+            nameContainer.appendChild(createdName);
+            nameContainerLength++;
+        }
+    });
+
+    //Set nameHeight global after names have been generated
+    nameHeight = document.querySelector(
+        ".party-section__names menu a"
+    ).offsetHeight;
 
     // Function to calculate and set the container height
     function setParentHeight(numberOfNames) {
         --numberOfNames;
         const height =
-            nameElements[0].offsetHeight * (numberOfNames + 1) +
-            parentGap * numberOfNames;
+            nameHeight * (numberOfNames + 1) + parentGap * numberOfNames;
         parentContainer.style.height = `${height}px`; // Show 3 full names and 2 half names
     }
 
     // Calculate and set the initial container height
-    setParentHeight(numberOfNames);
-
-    // nameElements.forEach((element, index, array) => {
-    //     const extraPadding = `${
-    //         (element.offsetHeight + parentGap) * Math.floor(numberOfNames / 2) +
-    //         (element.offsetHeight / 2) * (numberOfNames % 2)
-    //     }px`;
-
-    //     if (index === 0) {
-    //         element.style.paddingTop = extraPadding;
-    //     }
-
-    //     if (index === array.length - 1) {
-    //         element.style.paddingBottom = extraPadding;
-    //     }
-    // });
+    setParentHeight(visibleNames);
 
     // Listen for window resize events to adjust the container height
     window.addEventListener("resize", setParentHeight);
+
+    //click on the name
+    let startingIndex = (resetIndex = nameContainerLength - visibleNames);
+    let initialNameElement = document.querySelector(
+        `.party-section__names menu a:nth-of-type(${startingIndex + 1})`
+    );
+    initialNameElement.click();
 });
 
-function setSelectedState(selectedElement, numberOfNames) {
-    const selectedIndex = Number(selectedElement.dataset.index);
-    const selectedAdjacentDepth = Math.floor(numberOfNames / 2);
+function createNameElement(name, index) {
+    const nameElement = document.createElement("a");
+    nameElement.textContent = name;
+    nameElement.dataset.index = index;
+
+    nameElement.addEventListener("click", function () {
+        // Determine direction the menu needs to travel
+        let prevSelectedName = document.querySelector(".selected");
+        let prevSelectedIndex = prevSelectedName.dataset.index;
+        prevIndex = prevSelectedIndex;
+        let clickedIndex = Number(this.dataset.index);
+
+        setSelectedState(this);
+
+        let indexDifference = clickedIndex - prevSelectedIndex;
+        let numberOfNames = Math.abs(indexDifference);
+
+        let direction;
+        indexDifference > 0 ? (direction = "down") : (direction = "up");
+
+        moveNames(direction, numberOfNames);
+
+        //prettier-ignore
+        document.querySelector(".party-section__image").src = `./images/${this.textContent}.webp`;
+    });
+
+    return nameElement;
+}
+
+function setSelectedState(selectedElement) {
+    selectedIndex = Number(selectedElement.dataset.index);
+
     const nameElements = document.querySelectorAll(
         ".party-section__names menu a"
     );
 
     nameElements.forEach((element) => {
-        const curIndex = Number(element.dataset.index);
-
-        element.removeAttribute("class");
+        element.classList.remove("selected");
         element.removeAttribute("style");
-
-        if (curIndex === selectedIndex) return;
-
-        const indexDifference = Math.abs(curIndex - selectedIndex);
-
-        if (indexDifference >= 0 && indexDifference <= selectedAdjacentDepth) {
-            const indentSize = `${indexDifference * 3}rem`;
-            element.style.transform = `translateX(${indentSize})`;
-        }
     });
 
     selectedElement.classList.add("selected");
 }
+
+function moveNames(direction, numberOfNames) {
+    console.log(prevIndex);
+    let moveDistance = numberOfNames * (nameHeight + parentGap);
+    direction === "up" ? (slider += moveDistance) : (slider -= moveDistance);
+
+    if (
+        Number(prevIndex) === numOfDuplicates ||
+        Number(prevIndex) === nameContainerLength - numOfDuplicates - 1
+    ) {
+        nameContainer.style.transition = "none";
+    } else {
+        nameContainer.style.transition = "transform .5s linear";
+    }
+
+    nameContainer.style.transform = `translateY(${slider}px)`;
+}
+
+nameContainer.addEventListener("transitionend", () => {
+    let resetIndex = 0;
+    if (selectedIndex === numOfDuplicates) {
+        resetIndex = nameContainerLength - visibleNames;
+        document
+            .querySelector(
+                `.party-section__names menu a:nth-of-type(${resetIndex + 1})`
+            )
+            .click();
+    }
+
+    if (selectedIndex === nameContainerLength - numOfDuplicates - 1) {
+        resetIndex = visibleNames;
+        document
+            .querySelector(
+                `.party-section__names menu a:nth-of-type(${resetIndex})`
+            )
+            .click();
+    }
+});
