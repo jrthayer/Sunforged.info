@@ -1,4 +1,6 @@
-const nameContainer = document.querySelector(".party-section__names menu");
+const nameContainer = document.querySelector(
+    ".party-section__selection-names menu"
+);
 let parentGap = window.getComputedStyle(nameContainer).getPropertyValue("gap");
 parentGap = Number(parentGap.replace(/px$/, ""));
 let nameHeight;
@@ -8,7 +10,7 @@ let isMoving = false;
 let selectedIndex = 0;
 let prevIndex = 0;
 let nameContainerLength = 0;
-const visibleNames = 5;
+const visibleNames = 3;
 const numOfDuplicates = Math.floor(visibleNames / 2);
 
 document.querySelector("#test").addEventListener("click", () => {
@@ -33,8 +35,12 @@ document
 
 // script.js
 document.addEventListener("DOMContentLoaded", function () {
-    const nameContainer = document.querySelector(".party-section__names menu");
-    const parentContainer = document.querySelector(".party-section__names");
+    const nameContainer = document.querySelector(
+        ".party-section__selection-names menu"
+    );
+    const parentContainer = document.querySelector(
+        ".party-section__selection-names"
+    );
     // Needs to be odd
 
     // Sample names (you can replace these with your data)
@@ -84,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Set nameHeight global after names have been generated
     nameHeight = document.querySelector(
-        ".party-section__names menu a"
+        ".party-section__selection-names menu a"
     ).offsetHeight;
 
     // Function to calculate and set the container height
@@ -104,7 +110,9 @@ document.addEventListener("DOMContentLoaded", function () {
     //click on the name
     let startingIndex = (resetIndex = nameContainerLength - visibleNames);
     let initialNameElement = document.querySelector(
-        `.party-section__names menu a:nth-of-type(${startingIndex + 1})`
+        `.party-section__selection-names menu a:nth-of-type(${
+            startingIndex + 1
+        })`
     );
     initialNameElement.click();
 });
@@ -142,7 +150,7 @@ function setSelectedState(selectedElement) {
     selectedIndex = Number(selectedElement.dataset.index);
 
     const nameElements = document.querySelectorAll(
-        ".party-section__names menu a"
+        ".party-section__selection-names menu a"
     );
 
     nameElements.forEach((element) => {
@@ -164,10 +172,11 @@ function moveNames(direction, numberOfNames) {
     ) {
         nameContainer.style.transition = "none";
     } else {
-        nameContainer.style.transition = "transform .5s linear";
+        nameContainer.style.transition = "transform .4s linear";
     }
 
     nameContainer.style.transform = `translateY(${slider}px)`;
+    nameContainer.style.setProperty("--current:", `${selectedIndex}`);
 }
 
 nameContainer.addEventListener("transitionend", () => {
@@ -176,7 +185,9 @@ nameContainer.addEventListener("transitionend", () => {
         resetIndex = nameContainerLength - visibleNames;
         document
             .querySelector(
-                `.party-section__names menu a:nth-of-type(${resetIndex + 1})`
+                `.party-section__selection-names menu a:nth-of-type(${
+                    resetIndex + 1
+                })`
             )
             .click();
     }
@@ -185,8 +196,32 @@ nameContainer.addEventListener("transitionend", () => {
         resetIndex = visibleNames;
         document
             .querySelector(
-                `.party-section__names menu a:nth-of-type(${resetIndex})`
+                `.party-section__selection-names menu a:nth-of-type(${resetIndex})`
             )
             .click();
     }
 });
+
+// nth-of-type starts at 1 instead of zero so this goes back one
+document
+    .querySelector(".party-section__selection-container img")
+    .addEventListener("click", () => {
+        document
+            .querySelector(
+                `.party-section__selection-names menu a:nth-of-type(${selectedIndex})`
+            )
+            .click();
+    });
+
+// nth-of-type starts at 1 instead of zero so you need to add 2 to go forward 1 name
+document
+    .querySelector(".party-section__selection-container img:last-of-type")
+    .addEventListener("click", () => {
+        document
+            .querySelector(
+                `.party-section__selection-names menu a:nth-of-type(${
+                    selectedIndex + 2
+                })`
+            )
+            .click();
+    });
