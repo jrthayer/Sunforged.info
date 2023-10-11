@@ -123,27 +123,35 @@ function createNameElement(name, index) {
     nameElement.dataset.index = index;
 
     nameElement.addEventListener("click", function () {
-        // Determine direction the menu needs to travel
-        let prevSelectedName = document.querySelector(".selected");
-        let prevSelectedIndex = prevSelectedName.dataset.index;
-        prevIndex = prevSelectedIndex;
-        let clickedIndex = Number(this.dataset.index);
-
-        setSelectedState(this);
-
-        let indexDifference = clickedIndex - prevSelectedIndex;
-        let numberOfNames = Math.abs(indexDifference);
-
-        let direction;
-        indexDifference > 0 ? (direction = "down") : (direction = "up");
-
-        moveNames(direction, numberOfNames);
-
-        //prettier-ignore
-        document.querySelector(".party-section__image").src = `./images/${this.textContent}.webp`;
+        setSelectedName(this);
     });
 
     return nameElement;
+}
+
+function setSelectedName(element) {
+    //If the name selector is currently moving do not allow another element to be selected
+    if (isMoving === true) return;
+
+    console.log("moving to clicked name");
+    // Determine direction the menu needs to travel
+    let prevSelectedName = document.querySelector(".selected");
+    let prevSelectedIndex = prevSelectedName.dataset.index;
+    prevIndex = prevSelectedIndex;
+    let clickedIndex = Number(element.dataset.index);
+
+    setSelectedState(element);
+
+    let indexDifference = clickedIndex - prevSelectedIndex;
+    let numberOfNames = Math.abs(indexDifference);
+
+    let direction;
+    indexDifference > 0 ? (direction = "down") : (direction = "up");
+
+    moveNames(direction, numberOfNames);
+
+    //prettier-ignore
+    document.querySelector(".party-section__image").src = `./images/${element.textContent}.webp`;
 }
 
 function setSelectedState(selectedElement) {
@@ -162,7 +170,6 @@ function setSelectedState(selectedElement) {
 }
 
 function moveNames(direction, numberOfNames) {
-    console.log(prevIndex);
     let moveDistance = numberOfNames * (nameHeight + parentGap);
     direction === "up" ? (slider += moveDistance) : (slider -= moveDistance);
 
@@ -170,8 +177,10 @@ function moveNames(direction, numberOfNames) {
         Number(prevIndex) === numOfDuplicates ||
         Number(prevIndex) === nameContainerLength - numOfDuplicates - 1
     ) {
+        isMoving = false;
         nameContainer.style.transition = "none";
     } else {
+        isMoving = true;
         nameContainer.style.transition = "transform .4s linear";
     }
 
@@ -180,6 +189,8 @@ function moveNames(direction, numberOfNames) {
 }
 
 nameContainer.addEventListener("transitionend", () => {
+    isMoving = false;
+
     let resetIndex = 0;
     if (selectedIndex === numOfDuplicates) {
         resetIndex = nameContainerLength - visibleNames;
