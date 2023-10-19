@@ -42,3 +42,11 @@ body,
 #__next {
     isolation: isolate;
 }
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+}

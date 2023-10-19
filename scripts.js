@@ -1,6 +1,7 @@
 // css selectors
 const cssNameList = ".party-section__selection-names menu a";
 const cssArrowButton = ".party-section__selection-container img";
+const cssCharacterDetails = ".party-section__character-details p";
 
 //Static DOM Elements
 const nameContainer = document.querySelector(
@@ -19,6 +20,7 @@ let selectedIndex = 0;
 let nameContainerLength = 0;
 const visibleNames = 3;
 const numOfDuplicates = Math.floor(visibleNames / 2);
+let characterData;
 
 //Event listener for mobile navigation
 document.querySelector("#mobile-nav-button").addEventListener("click", () => {
@@ -28,78 +30,98 @@ document.querySelector("#mobile-nav-button").addEventListener("click", () => {
 // script.js
 document.addEventListener("DOMContentLoaded", function () {
     // Sample names (you can replace these with your data)
-    const characterData = [
-        "Carlisle",
-        "Desmond",
-        "Indrasa",
-        "Morgaine",
-        "V",
-        "Tac",
-        // Add more names as needed
-    ];
+    // const characterData = [
+    //     "carlisle",
+    //     "desmond",
+    //     "indrasa",
+    //     "morgaine",
+    //     "v",
+    //     "tac",
+    //     // Add more names as needed
+    // ];
+    //Get character data
+    axios
+        .get("/data/characters.json")
+        .then(function (response) {
+            characterData = response.data;
+            let characterArray = characterData.characters;
+            console.log(characterArray);
+            //Insert Duplicate Names at beginning
+            for (let x = numOfDuplicates; x > 0; x--) {
+                let arrayEnd = characterArray.length;
+                createdName = createNameElement(
+                    characterArray[arrayEnd - x].name,
+                    nameContainerLength,
+                    arrayEnd - x
+                );
+                nameContainer.appendChild(createdName);
+                nameContainerLength++;
+            }
 
-    //Insert Duplicate Names at beginning
-    for (let x = numOfDuplicates; x > 0; x--) {
-        let arrayEnd = characterData.length;
-        createdName = createNameElement(
-            characterData[arrayEnd - x],
-            nameContainerLength
-        );
-        nameContainer.appendChild(createdName);
-        nameContainerLength++;
-    }
+            //Create names elements
+            characterArray.forEach((character, index) => {
+                let createdName = createNameElement(
+                    character.name,
+                    nameContainerLength,
+                    index
+                );
 
-    //Create names elements
-    characterData.forEach((name) => {
-        let createdName = createNameElement(name, nameContainerLength);
+                if (nameContainerLength === numOfDuplicates) {
+                    createdName.classList.add("selected");
+                    selectedIndex = nameContainerLength;
+                }
 
-        if (nameContainerLength === numOfDuplicates) {
-            createdName.classList.add("selected");
-            selectedIndex = nameContainerLength;
-        }
+                nameContainer.appendChild(createdName);
+                nameContainerLength++;
+            });
 
-        nameContainer.appendChild(createdName);
-        nameContainerLength++;
-    });
+            characterArray.forEach((character, index) => {
+                if (index < visibleNames) {
+                    let createdName = createNameElement(
+                        character.name,
+                        nameContainerLength,
+                        index
+                    );
 
-    characterData.forEach((name, index) => {
-        if (index < visibleNames) {
-            let createdName = createNameElement(name, nameContainerLength);
+                    nameContainer.appendChild(createdName);
+                    nameContainerLength++;
+                }
+            });
 
-            nameContainer.appendChild(createdName);
-            nameContainerLength++;
-        }
-    });
+            //Set nameHeight global after names have been generated
+            nameHeight = document.querySelector(cssNameList).offsetHeight;
 
-    //Set nameHeight global after names have been generated
-    nameHeight = document.querySelector(cssNameList).offsetHeight;
+            // Function to calculate and set the container height(Needed for resize listener)
+            function setParentHeight(numberOfNames) {
+                const height =
+                    nameHeight * numberOfNames +
+                    parentGap * (numberOfNames - 1);
+                let parentContainer = document.querySelector(
+                    ".party-section__selection-names"
+                );
+                parentContainer.style.height = `${height}px`; // Show 3 full names and 2 half names
+            }
 
-    // Function to calculate and set the container height(Needed for resize listener)
-    function setParentHeight(numberOfNames) {
-        const height =
-            nameHeight * numberOfNames + parentGap * (numberOfNames - 1);
-        let parentContainer = document.querySelector(
-            ".party-section__selection-names"
-        );
-        parentContainer.style.height = `${height}px`; // Show 3 full names and 2 half names
-    }
+            // Calculate and set the initial container height
+            setParentHeight(visibleNames);
 
-    // Calculate and set the initial container height
-    setParentHeight(visibleNames);
+            //Clicks the starting name
+            let startingIndex = (resetIndex =
+                nameContainerLength - visibleNames);
+            let initialNameElement = document.querySelector(
+                `${cssNameList}:nth-of-type(${startingIndex + 1})`
+            );
 
-    //Clicks the starting name
-    let startingIndex = (resetIndex = nameContainerLength - visibleNames);
-    let initialNameElement = document.querySelector(
-        `${cssNameList}:nth-of-type(${startingIndex + 1})`
-    );
-
-    initialNameElement.click();
-
-    // Listen for window resize events to adjust the container height
-    window.addEventListener("resize", setParentHeight);
+            initialNameElement.click();
+            // Listen for window resize events to adjust the container height
+            window.addEventListener("resize", setParentHeight);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 });
 
-function createNameElement(name, index) {
+function createNameElement(name, index, dataIndex) {
     const nameElement = document.createElement("a");
     nameElement.textContent = name;
     nameElement.dataset.index = index;
@@ -108,13 +130,13 @@ function createNameElement(name, index) {
         // return if this name is already selected
         if (this.classList.contains("selected")) return;
 
-        nameClickHandler(this);
+        nameClickHandler(this, dataIndex);
     });
 
     return nameElement;
 }
 
-function nameClickHandler(element) {
+function nameClickHandler(element, dataIndex) {
     //If the name selector is currently moving do not allow another element to be selected
     if (isMoving === true) return;
 
@@ -140,8 +162,35 @@ function nameClickHandler(element) {
     setSelectedState(element);
 
     //Load character data(WIP)(Currently sets src of character image only)
+    setCharacterDetails(
+        characterData.characters[dataIndex],
+        characterData.level
+    );
     //prettier-ignore
     document.querySelector(".party-section__image").src = `./images/${element.textContent}.webp`;
+}
+
+function setCharacterDetails(details, level) {
+    let name = details.name;
+    details = details.details;
+    let fields = document.querySelectorAll(cssCharacterDetails);
+    fields[0].textContent = upperCase(name);
+    //Little wonky have an a inside a paragraph but it makes things easy
+    fields[1].innerHTML = `<a href="${details.twitch}"
+    class=""
+    target="_blank"
+    rel="noopener noreferrer">${upperCase(
+        details.player
+    )} <i class="fab fa-twitch" aria-hidden="true"></i></a>`;
+    fields[2].textContent = upperCase(details.bio);
+    fields[3].textContent = level;
+    fields[4].textContent = upperCase(details.class);
+
+    console.log(fields);
+}
+
+function upperCase(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 //sets the selected class on one name and removes it from the rest
