@@ -41,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // ];
     //Get character data
     axios
-        .get("/data/characters.json")
+        .get("./data/characters.json")
         .then(function (response) {
             characterData = response.data;
             let characterArray = characterData.characters;
-            console.log(characterArray);
+
             //Insert Duplicate Names at beginning
             for (let x = numOfDuplicates; x > 0; x--) {
                 let arrayEnd = characterArray.length;
@@ -185,8 +185,6 @@ function setCharacterDetails(details, level) {
     fields[2].textContent = upperCase(details.bio);
     fields[3].textContent = level;
     fields[4].textContent = upperCase(details.class);
-
-    console.log(fields);
 }
 
 function upperCase(text) {
