@@ -161,13 +161,13 @@ function nameClickHandler(element, dataIndex) {
     moveNames(direction, numberOfNames, animate);
     setSelectedState(element);
 
-    //Load character data(WIP)(Currently sets src of character image only)
+    //Load character data
     setCharacterDetails(
         characterData.characters[dataIndex],
         characterData.level
     );
     //prettier-ignore
-    document.querySelector(".party-section__image").src = `./images/${element.textContent}.webp`;
+    document.querySelector(".party-section__image").src = `./images/${upperCase(element.textContent)}.webp`;
 }
 
 function setCharacterDetails(details, level) {
