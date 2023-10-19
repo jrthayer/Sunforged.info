@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to calculate and set the container height(Needed for resize listener)
     function setParentHeight(numberOfNames) {
         const height =
-            nameHeight * numberOfNames + parentGap * (numberOfNames + 1);
+            nameHeight * numberOfNames + parentGap * (numberOfNames - 1);
         let parentContainer = document.querySelector(
             ".party-section__selection-names"
         );
