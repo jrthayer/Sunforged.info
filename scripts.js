@@ -16,10 +16,10 @@ let nameHeight;
 // States
 let slider = 0;
 let isMoving = false;
-let selectedIndex = 0;
 let nameContainerLength = 0;
 const visibleNames = 3;
 const numOfDuplicates = Math.floor(visibleNames / 2);
+let selectedIndex = numOfDuplicates;
 let characterData;
 
 //Event listener for mobile navigation
@@ -55,11 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     nameContainerLength,
                     index
                 );
-
-                if (nameContainerLength === numOfDuplicates) {
-                    createdName.classList.add("selected");
-                    selectedIndex = nameContainerLength;
-                }
 
                 nameContainer.appendChild(createdName);
                 nameContainerLength++;
@@ -98,9 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 isMoving = false;
                 nameContainer.style.transition = "none";
                 nameContainer.style.transform = `translateY(${slider}px)`;
-                document
-                    .querySelector(".selected")
-                    .classList.remove("selected");
 
                 //Clicks the starting name
                 let startingIndex = nameContainerLength - visibleNames;
@@ -132,9 +124,6 @@ function createNameElement(name, index, dataIndex) {
     nameElement.dataset.index = index;
 
     nameElement.addEventListener("click", function () {
-        // return if this name is already selected
-        if (this.classList.contains("selected")) return;
-
         nameClickHandler(this, dataIndex);
     });
 
@@ -145,13 +134,17 @@ function nameClickHandler(element, dataIndex) {
     //If the name selector is currently moving do not allow another element to be selected
     if (isMoving === true) return;
 
-    // Determine direction the menu needs to travel
     const prevSelectedIndex = selectedIndex;
     let clickedIndex = Number(element.dataset.index);
-
     let indexDifference = clickedIndex - prevSelectedIndex;
     let numberOfNames = Math.abs(indexDifference);
 
+    //This means this is the currently selected name.
+    // Since this script is reliant on the transitionend listener if you don't change to a different name the
+    // script never changes the isMoving variable above.
+    if (indexDifference === 0) return;
+
+    // Determine direction the menu needs to travel
     let direction;
     indexDifference > 0 ? (direction = "down") : (direction = "up");
 
