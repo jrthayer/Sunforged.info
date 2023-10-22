@@ -1,3 +1,19 @@
+.page-navigation {
+    position: absolute;
+    bottom: 2rem;
+    color: var(--color-secondary);
+    right: calc(50%);
+    font-size: 2rem;
+
+    display: flex;
+    width: 500px;
+    transform: translate(50%, 0);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 .party-section__character-details--row i {
     font-size: 1rem;
 }
@@ -15,6 +31,8 @@
 
 h2 {
     font-size: 3rem;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 html {
@@ -300,6 +318,14 @@ section:not(:first-of-type) {
         transform: none;
     }
 
+    .party-section__selection-container {
+        margin-right: 0;
+    }
+
+    .party-section__selection-container img {
+        left: 135px;
+    }
+
     .party-section__selection-names menu {
         font-size: 2rem;
     }
@@ -549,12 +575,12 @@ section:not(:first-of-type) {
 }
 
 @media (min-width: 1200px) {
-    h2 {
-        font-size: 5rem;
+    .hero {
+        min-height: 700px;
     }
 
-    .hero {
-        min-height: 750px;
+    h2 {
+        font-size: 5rem;
     }
 
     .fancy-button__core {
@@ -565,7 +591,9 @@ section:not(:first-of-type) {
     .hero__playlist {
         font-size: 2.5rem;
     }
+}
 
+@media (min-width: 1400px) and (min-height: 900px) {
     .floating-button:first-of-type {
         display: none;
     }
