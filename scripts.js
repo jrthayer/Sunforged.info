@@ -29,16 +29,6 @@ document.querySelector("#mobile-nav-button").addEventListener("click", () => {
 
 // script.js
 document.addEventListener("DOMContentLoaded", function () {
-    // Sample names (you can replace these with your data)
-    // const characterData = [
-    //     "carlisle",
-    //     "desmond",
-    //     "indrasa",
-    //     "morgaine",
-    //     "v",
-    //     "tac",
-    //     // Add more names as needed
-    // ];
     //Get character data
     axios
         .get("./data/characters.json")
@@ -88,11 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            //Set nameHeight global after names have been generated
-            nameHeight = document.querySelector(cssNameList).offsetHeight;
-
             // Function to calculate and set the container height(Needed for resize listener)
             function setParentHeight(numberOfNames) {
+                //Set nameHeight global after names have been generated
+                nameHeight = document.querySelector(cssNameList).offsetHeight;
+
                 const height =
                     nameHeight * numberOfNames +
                     parentGap * (numberOfNames - 1);
@@ -102,19 +92,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 parentContainer.style.height = `${height}px`; // Show 3 full names and 2 half names
             }
 
+            function setInitialName() {
+                selectedIndex = numOfDuplicates;
+                slider = 0;
+                isMoving = false;
+                nameContainer.style.transition = "none";
+                nameContainer.style.transform = `translateY(${slider}px)`;
+                document
+                    .querySelector(".selected")
+                    .classList.remove("selected");
+
+                //Clicks the starting name
+                let startingIndex = nameContainerLength - visibleNames;
+                let initialNameElement = document.querySelector(
+                    `${cssNameList}:nth-of-type(${startingIndex + 1})`
+                );
+
+                initialNameElement.click();
+            }
+
             // Calculate and set the initial container height
             setParentHeight(visibleNames);
+            setInitialName();
 
-            //Clicks the starting name
-            let startingIndex = (resetIndex =
-                nameContainerLength - visibleNames);
-            let initialNameElement = document.querySelector(
-                `${cssNameList}:nth-of-type(${startingIndex + 1})`
-            );
-
-            initialNameElement.click();
             // Listen for window resize events to adjust the container height
-            window.addEventListener("resize", setParentHeight);
+            window.addEventListener("resize", function () {
+                setParentHeight(visibleNames);
+                setInitialName();
+            });
         })
         .catch(function (error) {
             console.log(error);
