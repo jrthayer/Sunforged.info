@@ -1,59 +1,63 @@
 {
-    "level": 3,
     "characters": [
         {
-            "name": "tac",
-            "details": {
-                "player": "dodger",
-                "bio": "A changeling of mysterious origins, tasked with infiltrating a noble family for the past 5 years. With the infiltration now in shambles, their true objective and motive is a mystery to everyone.",
-                "class": "bard",
-                "twitch": "https://www.twitch.tv/dexbonus"
-            }
+            "name": "zonea",
+            "player": "dodger",
+            "bio": " A striking beauty that exudes an ethereal charm with her radiant golden glow. As the bride-to-be for the Crownheart Hall scion, she embodies the very essence of proper society. Exemplifying grace, organization, and impeccable manners.",
+            "class": "bard",
+            "twitch": "https://www.twitch.tv/dexbonus",
+            "level": 3
         },
+
         {
             "name": "indrasa",
-            "details": {
-                "player": "OLG",
-                "bio": "An elegant elf with a profound passion for the magical arts, dedicated to the pursuit of knowledge within the forbidden school of creation. They firmly believe that thorough research is the key to preventing misuse, rather than outright prohibition.",
-                "class": "wizard",
-                "twitch": "https://www.twitch.tv/oldladygamer"
-            }
+            "player": "OLG",
+            "bio": "An elegant elf with a profound passion for the magical arts, dedicated to the pursuit of knowledge within the forbidden school of creation. They firmly believe that thorough research is the key to preventing misuse, rather than outright prohibition.",
+            "class": "wizard",
+            "twitch": "https://www.twitch.tv/oldladygamer",
+            "level": 3
         },
         {
             "name": "v",
-            "details": {
-                "player": "breeBunn",
-                "bio": "A small moth-like warrior from the Great White North, their form accented in the crimson hues of blood. Despite their violent past, they remain a humble soul, blissfully unaware of the intricacies of societal norms.",
-                "class": "barbarian",
-                "twitch": "https://www.twitch.tv/breebunn"
-            }
+            "player": "breeBunn",
+            "bio": "A small moth-like warrior from the Great White North, their form accented in the crimson hues of blood. Despite their violent past, they remain a humble soul, blissfully unaware of the intricacies of societal norms.",
+            "class": "barbarian",
+            "twitch": "https://www.twitch.tv/breebunn",
+            "level": 3
         },
         {
             "name": "desmond",
-            "details": {
-                "player": "shayneHawke",
-                "bio": "A sentient automaton of unknown origin, exuding charismatic charm with larger-than-life tales and a penchant for invoking a 'tactical' retreat without hesitation!",
-                "class": "artificer",
-                "twitch": "https://www.twitch.tv/shaynehawke"
-            }
+            "player": "shayneHawke",
+            "bio": "A sentient automaton of unknown origin, exuding charismatic charm with larger-than-life tales and a penchant for invoking a 'tactical' retreat without hesitation!",
+            "class": "artificer",
+            "twitch": "https://www.twitch.tv/shaynehawke",
+            "level": 3
         },
         {
             "name": "carlisle",
-            "details": {
-                "player": "tomato",
-                "bio": "A hobgoblin, journeying from the far reaches of the Great White North alongside his steadfast companion, V. His medical prowess proves a blessing to allies and a curse to foes.",
-                "class": "rogue",
-                "twitch": "https://www.twitch.tv/tomato"
-            }
+            "player": "tomato",
+            "bio": "A hobgoblin, journeying from the far reaches of the Great White North alongside his steadfast companion, V. His medical prowess proves a blessing to allies and a curse to foes.",
+            "class": "rogue",
+            "twitch": "https://www.twitch.tv/tomato",
+            "level": 3
         },
         {
             "name": "morgaine",
-            "details": {
-                "player": "strippin",
-                "bio": "A noble knight hailing from the Dreadvault, unwavering in their dedication to upholding the realm's laws. Despite their blindness, they possess an extraordinary ability to perceive the essence of magic.",
-                "class": "paladin/Warlock",
-                "twitch": "https://www.twitch.tv/strippin"
-            }
+            "player": "strippin",
+            "bio": "A noble knight hailing from the Dreadvault, unwavering in their dedication to upholding the realm's laws. Despite their blindness, they possess an extraordinary ability to perceive the essence of magic.",
+            "class": "paladin/Warlock",
+            "twitch": "https://www.twitch.tv/strippin",
+            "level": 3
+        }
+    ],
+    "extra": [
+        {
+            "name": "tac",
+            "player": "dodger",
+            "bio": "A changeling of mysterious origins, tasked with infiltrating a noble family for the past 5 years. With the infiltration now in shambles, their true objective and motive is a mystery to everyone.",
+            "class": "bard",
+            "twitch": "https://www.twitch.tv/dexbonus",
+            "level": 3
         }
     ]
 }

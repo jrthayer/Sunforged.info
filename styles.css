@@ -120,7 +120,8 @@ body {
     background-color: black;
 }
 
-a {
+a,
+button {
     cursor: pointer;
 }
 
@@ -212,6 +213,22 @@ section:not(:first-of-type) {
     overflow: hidden;
     padding-top: 1rem;
     min-height: calc(750px + 1rem);
+}
+
+.party-section__content-container button {
+    border-radius: 50%;
+    border: none;
+    color: var(--color-primary);
+    background-color: transparent;
+    position: absolute;
+    transform: translate(-50%, calc(-50% + min(5px, 0.5vw)));
+
+    top: 50%;
+    right: -45px;
+}
+
+.hidden {
+    display: none;
 }
 
 .party-section__image {
@@ -362,7 +379,7 @@ section:not(:first-of-type) {
     }
 
     .party-section__selection-container {
-        margin-right: 175px;
+        margin-right: 110px;
     }
 
     .party-section__selection-container img {
@@ -375,11 +392,11 @@ section:not(:first-of-type) {
     }
 
     .party-section__character-details {
-        display: inline-block;
-        vertical-align: top;
+        display: block;
+        float: right;
         width: 325px;
         margin-top: 50px;
-        margin-left: 475px;
+
         padding: 0;
 
         white-space: normal;
