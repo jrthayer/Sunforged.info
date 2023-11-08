@@ -15,8 +15,9 @@
 
         <!-- CSS stylesheets -->
         <link rel="stylesheet" href="reset.css" />
-        <link rel="stylesheet" href="styles.css" />
         <link rel="stylesheet" href="fonts.css" />
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="countdown.css" />
 
         <!-- Font Awesome Icons -->
         <script
@@ -39,7 +40,7 @@
             <div class="hero__outline border-primary"></div>
             <nav class="page-navigation">
                 <a href="#cast">Cast</a>
-                <a href="#countdown">Next Show</a>
+                <a href="#nextShow">Next Show</a>
                 <a href="#patreon">Patreon</a>
             </nav>
             <div class="social-links">
@@ -186,8 +187,30 @@
                 </div>
             </div>
         </section>
-        <section id="countdown">
-            <h2 class="gradient-sunforged">Next Show</h2>
+        <section class="nextShow" id="nextShow">
+            <h2>Next Show</h2>
+            <div class="nextShow__countdown">
+                <div class="nextShow__countdown-unit">
+                    <div>00</div>
+                    <div class="">days</div>
+                </div>
+                <div>:</div>
+                <div class="nextShow__countdown-unit">
+                    <div>00</div>
+                    <div class="">hrs</div>
+                </div>
+                <div>:</div>
+                <div class="nextShow__countdown-unit">
+                    <div>00</div>
+                    <div class="">mins</div>
+                </div>
+                <div>:</div>
+                <div class="nextShow__countdown-unit">
+                    <div>00</div>
+                    <div>secs</div>
+                </div>
+            </div>
+            <p>Sunforged sessions are run every Sunday @ 12:30pst</p>
         </section>
         <section id="patreon">
             <h2 class="gradient-sunforged">Join The Patreon</h2>
@@ -195,4 +218,5 @@
     </body>
     <script src="navigation.js"></script>
     <script src="partySection.js"></script>
+    <script src="countdown.js"></script>
 </html>

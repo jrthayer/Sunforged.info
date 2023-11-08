@@ -1,0 +1,33 @@
+.nextShow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nextShow__countdown {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.nextShow__countdown-unit {
+    text-align: center;
+}
+
+.nextShow__countdown > div {
+    font-size: 6rem;
+    display: flex;
+    display: inline-block;
+    color: var(--color-secondary);
+}
+
+.nextShow__countdown-unit div:last-of-type {
+    font-size: 2rem;
+}
+
+.nextShow p {
+    margin-top: 5rem;
+    font-size: 1rem;
+    color: var(--color-primary-dark);
+}
