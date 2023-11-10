@@ -1,22 +1,22 @@
-function getNextUtcDayAtTime(targetDay, targetHour, targetMinute) {
-    const now = new Date();
-
-    const targetDate = new Date(now);
-    // Calculate the days until the next target Day
-    const daysUntilTargetDay = (targetDay - now.getUTCDay() + 7) % 7;
-    targetDate.setDate(daysUntilTargetDay + now.getUTCDate());
-
-    // Set the target time
+function getNextUtcDayAtTime(dateNow, targetDay, targetHour, targetMinute) {
+    const targetDate = new Date(dateNow);
+    //Set time first since setUTCHours will change the date
     targetDate.setUTCHours(targetHour, targetMinute, 0, 0);
 
+    // Calculate the days until the next target Day
+    const daysUntilTargetDay = (targetDay - dateNow.getUTCDay() + 7) % 7;
+    targetDate.setUTCDate(daysUntilTargetDay + dateNow.getUTCDate());
+    console.log(targetDate);
+    console.log(dateNow);
+
     // Calculate the time difference in milliseconds
-    let timeTill = targetDate - now;
+    let timeTill = targetDate - dateNow;
 
     // If the difference is negative the event has passed today already, so we add a week
     if (timeTill <= 0) {
         // If the target time for today has already passed, schedule it for next week
         targetDate.setUTCDate(targetDate.getUTCDate() + 7);
-        timeTill = targetDate - now;
+        timeTill = targetDate - dateNow;
     }
 
     const days = Math.floor(timeTill / (24 * 60 * 60 * 1000));
@@ -31,28 +31,18 @@ function getNextUtcDayAtTime(targetDay, targetHour, targetMinute) {
         hours: hours,
         minutes: minutes,
         seconds: seconds,
+        date: targetDate,
     };
 }
 
-// Example: Get the next UTC Sunday at 20:30 (8:30 PM)
-const targetDay = 0;
-const targetHour = 20;
-const targetMinute = 30;
-let nextUtcSunday = getNextUtcDayAtTime(targetDay, targetHour, targetMinute);
-
-setInterval(() => {
-    (nextUtcSunday = getNextUtcDayAtTime(targetDay, targetHour, targetMinute)),
-        setCountdown();
-}, 1000);
-
-function setCountdown() {
+function setCountdown(timeTill) {
     let domCountdownUnits = document.querySelectorAll(
         ".nextShow__countdown-unit > div:first-of-type"
     );
-    domCountdownUnits[0].textContent = lessThanTen(nextUtcSunday.days);
-    domCountdownUnits[1].textContent = lessThanTen(nextUtcSunday.hours);
-    domCountdownUnits[2].textContent = lessThanTen(nextUtcSunday.minutes);
-    domCountdownUnits[3].textContent = lessThanTen(nextUtcSunday.seconds);
+    domCountdownUnits[0].textContent = lessThanTen(timeTill.days);
+    domCountdownUnits[1].textContent = lessThanTen(timeTill.hours);
+    domCountdownUnits[2].textContent = lessThanTen(timeTill.minutes);
+    domCountdownUnits[3].textContent = lessThanTen(timeTill.seconds);
 }
 
 function lessThanTen(value) {
@@ -61,3 +51,42 @@ function lessThanTen(value) {
     }
     return value;
 }
+
+function setLocalSchedule(utcShowDate) {
+    const time = utcShowDate.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+    });
+
+    const day = utcShowDate.toLocaleDateString(undefined, {
+        weekday: "long",
+    });
+
+    let domFooter = document.querySelector(".nextShow__footer");
+    domFooter.innerHTML = `Sunforged sessions are run every <br \/\>${day} @ ${time}`;
+}
+
+//Get the next UTC Sunday at 20:30 (8:30 PM)
+const utcShowDay = 0;
+const utcShowHour = 20;
+const utcShowMinutes = 30;
+let dateNow = new Date();
+let nextUtcSunday = getNextUtcDayAtTime(
+    dateNow,
+    utcShowDay,
+    utcShowHour,
+    utcShowMinutes
+);
+setLocalSchedule(nextUtcSunday.date);
+
+setInterval(() => {
+    dateNow = new Date();
+    nextUtcSunday = getNextUtcDayAtTime(
+        dateNow,
+        utcShowDay,
+        utcShowHour,
+        utcShowMinutes
+    );
+    setCountdown(nextUtcSunday);
+}, 1000);

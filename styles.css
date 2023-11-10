@@ -26,12 +26,14 @@
 html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    font-family: Cormorant, serif;
 }
 
 h2 {
     text-align: center;
     font-size: 3rem;
     text-transform: uppercase;
+    font-family: Cormorant, serif;
 }
 
 /* ==================================================== */
@@ -119,7 +121,6 @@ section:not(:first-of-type) {
     min-height: 350px;
     height: calc(100vh - 2rem);
     width: calc(100% - 2rem);
-    margin: 1rem auto;
     margin: 1rem;
     text-align: center;
 }
@@ -202,6 +203,8 @@ section:not(:first-of-type) {
 
     color: var(--color-primary);
     background-image: linear-gradient(transparent 0%, black 100px);
+
+    font-family: serif;
 }
 
 .party-section__character-details--row {
@@ -505,6 +508,7 @@ section:not(:first-of-type) {
     width: calc(100% - 2rem);
     margin: 1rem;
     overflow: hidden;
+    text-wrap: nowrap;
 
     color: var(--color-primary);
 }
@@ -638,6 +642,6 @@ section:not(:first-of-type) {
     }
 
     .social-links i::before {
-        padding-right: 1.5rem;
+        padding-right: 0.7rem;
     }
 }
