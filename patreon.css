@@ -1,0 +1,36 @@
+.patreon-section {
+    color: var(--color-primary);
+}
+
+.patreon-section__container {
+    aspect-ratio: 12 / 6.85;
+    margin: 0 auto;
+    position: relative;
+    width: fit-content;
+}
+
+.patreon-section__container img:first-of-type {
+    position: absolute;
+    z-index: 1;
+}
+
+.patreon-section__perks {
+    position: absolute;
+    bottom: -75px;
+    right: -75px;
+    z-index: 2;
+    background-color: black;
+    font-size: 2rem;
+    padding: 0.5rem;
+    border: solid 5px var(--color-primary);
+    color: var(--color-secondary);
+}
+
+.patreon-section__perks h3 {
+    text-transform: uppercase;
+}
+
+.patreon-section__perks > div {
+    border: solid 5px var(--color-primary);
+    padding: 1rem;
+}
