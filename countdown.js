@@ -1,11 +1,11 @@
 function getNextUtcDayAtTime(dateNow, targetDay, targetHour, targetMinute) {
     const targetDate = new Date(dateNow);
-    //Set time first since setUTCHours will change the date
-    targetDate.setUTCHours(targetHour, targetMinute, 0, 0);
 
     // Calculate the days until the next target Day
     const daysUntilTargetDay = (targetDay - dateNow.getUTCDay() + 7) % 7;
     targetDate.setUTCDate(daysUntilTargetDay + dateNow.getUTCDate());
+
+    targetDate.setUTCHours(targetHour, targetMinute, 0, 0);
 
     // Calculate the time difference in milliseconds
     let timeTill = targetDate - dateNow;

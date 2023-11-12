@@ -133,6 +133,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // set the state for the initial name
             function setInitialName() {
+                // remove selected css class if currently on page
+                let domSelected = document.querySelector(".selected");
+                if (domSelected !== null) {
+                    domSelected.classList.remove("selected");
+                }
+
                 // reset state values
                 selectedIndex = numOfDuplicates;
                 slider = 0;
@@ -142,12 +148,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 domNameContainer.style.transition = "none";
                 domNameContainer.style.transform = `translateY(${slider}px)`;
 
-                //Clicks the starting name
+                // click the starting name
                 let startingIndex = nameContainerLength - visibleNames;
                 let initialNameElement = document.querySelector(
                     `${cssNameList}:nth-of-type(${startingIndex + 1})`
                 );
-
                 initialNameElement.click();
             }
 
@@ -165,8 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (windowWidth === window.innerWidth) return;
 
                 mutedObject.state = true;
-
                 setParentHeight(visibleNames);
+
                 setInitialName();
                 domPartyMuteButton.classList.remove("hidden");
                 windowWidth = window.innerWidth;
