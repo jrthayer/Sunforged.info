@@ -525,12 +525,15 @@ section:not(:first-of-type) {
 /* ====================== */
 .page-navigation {
     position: absolute;
+
     right: calc(50%);
     bottom: 2rem;
 
     display: flex;
+    justify-content: center;
     width: 500px;
     font-size: 2rem;
+    gap: 1rem;
     transform: translate(50%, 0);
 
     color: var(--color-secondary);
