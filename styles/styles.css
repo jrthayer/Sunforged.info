@@ -21,6 +21,7 @@
     --color-primary: #deaa68;
     --color-primary-dark: #d49240;
     --color-secondary: white;
+    --color-background: black;
 }
 
 html {
@@ -88,7 +89,7 @@ h2 {
 /* 3. Visuals */
 /* ==================================================== */
 body {
-    background-color: black;
+    background-color: var(--color-background);
 }
 
 a,
@@ -202,7 +203,10 @@ section:not(:first-of-type) {
     padding: 1rem;
 
     color: var(--color-primary);
-    background-image: linear-gradient(transparent 0%, black 100px);
+    background-image: linear-gradient(
+        transparent 0%,
+        var(--color-background) 100px
+    );
 
     font-family: serif;
 }
@@ -241,7 +245,11 @@ section:not(:first-of-type) {
 
     vertical-align: top;
 
-    background-image: linear-gradient(270deg, transparent 0%, black 25px);
+    background-image: linear-gradient(
+        270deg,
+        transparent 0%,
+        var(--color-background) 25px
+    );
 }
 
 .party-section__selection-container button {
@@ -449,6 +457,7 @@ section:not(:first-of-type) {
     border: solid 1px currentColor;
 
     font-size: 1rem;
+    font-weight: 700;
     text-decoration: none;
     letter-spacing: 0.25rem;
     color: currentColor;
@@ -471,10 +480,9 @@ section:not(:first-of-type) {
 }
 
 .fancy-button:hover * {
-    color: var(--color-secondary) !important;
-    border-color: var(--color-secondary) !important;
+    background-color: var(--color-primary);
+    color: var(--color-background);
     cursor: pointer;
-    transition: all 0.5s;
 }
 
 .fancy-button:hover .fancy-button__decoration {
@@ -524,20 +532,49 @@ section:not(:first-of-type) {
 /* 5.4 Page Navigation */
 /* ====================== */
 .page-navigation {
-    position: absolute;
+    display: none;
 
-    right: calc(50%);
-    bottom: 2rem;
-
-    display: flex;
-    justify-content: center;
-    width: 500px;
     font-size: 2rem;
-    gap: 1rem;
-    transform: translate(50%, 0);
-
-    color: var(--color-secondary);
+    color: var(--color-primary);
 }
+
+.page-navigation a {
+    border-style: solid;
+    border-width: 2px 1px;
+    display: flex;
+    align-items: center;
+
+    padding: 0 1rem;
+
+    font-weight: 700;
+}
+
+.page-navigation a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+}
+
+.page-navigation a:first-child {
+    border-top-left-radius: 30%;
+    border-bottom-left-radius: 30%;
+    border-left-width: 10px;
+    padding-left: 2rem;
+}
+
+.page-navigation a:last-child {
+    border-top-right-radius: 30%;
+    border-bottom-right-radius: 30%;
+    border-right-width: 10px;
+    padding-right: 2rem;
+}
+
+/* .page-navigation a::after {
+    padding-left: 1rem;
+    content: "/";
+    position: relative;
+    font-size: 4rem;
+} */
 
 /* ==================================================== */
 /* 6. State Classes*/
@@ -611,6 +648,18 @@ section:not(:first-of-type) {
 @media (min-width: 1400px) and (min-height: 900px) {
     .floating-button:first-of-type {
         display: none;
+    }
+
+    .page-navigation {
+        position: absolute;
+        transform: translate(50%, 0);
+
+        right: calc(50%);
+        bottom: 3rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .social-links {
