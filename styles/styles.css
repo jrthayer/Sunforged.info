@@ -8,6 +8,8 @@
         4.1 Hero Section
         4.2 Party Section
             4.2.1 Party Section Selection
+        4.3 Patreon Section
+        4.4 Footer
     5. Components
         5.1 Floating Button
         5.2 Fancy Button
@@ -109,6 +111,10 @@ section {
     min-height: 100vh;
     margin-bottom: 1rem;
     overflow: hidden;
+}
+
+section:last-of-type {
+    min-height: auto;
 }
 
 section:not(:first-of-type) {
@@ -394,12 +400,84 @@ section:not(:first-of-type) {
     }
 }
 
+/* 4.3 Patreon Section */
+/* ====================== */
+
+.patreon-section {
+    color: var(--color-primary);
+    overflow: visible;
+}
+
+.patreon-section__container {
+    aspect-ratio: 12 / 6.85;
+    margin: 0 0.5rem;
+    position: relative;
+    width: fit-content;
+}
+
+.patreon-section__container img:first-of-type {
+    position: absolute;
+    z-index: 1;
+}
+
+.patreon-section__perks {
+    position: relative;
+
+    background-color: black;
+
+    font-size: clamp(1rem, 2.5vw, 2rem);
+
+    padding: 0.2rem;
+    margin: 2rem;
+    border: solid 3px var(--color-primary);
+    color: var(--color-secondary);
+
+    bottom: +75px;
+    z-index: 2;
+}
+
+.patreon-section__perks h3 {
+    text-transform: uppercase;
+}
+
+.patreon-section__perks > div {
+    border: solid 3px var(--color-primary);
+    padding: 1rem;
+}
+
+@media (min-width: 1200px) {
+    .patreon-section__container {
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1400px) {
+    .patreon-section__perks {
+        position: absolute;
+        bottom: -75px;
+        left: -75px;
+        z-index: 2;
+        font-size: 2rem;
+    }
+}
+
+/* 4.4 Footer Section */
+/* ====================== */
+footer {
+    height: 100px;
+    margin-top: 2rem;
+}
+
 /* ==================================================== */
 /* 5. Components */
 /* ==================================================== */
 
 /* 5.1 Floating Button */
 /* ====================== */
+#top-nav-button {
+    margin: 3rem;
+}
+
 .floating-button {
     z-index: 100;
     position: fixed;
@@ -414,7 +492,7 @@ section:not(:first-of-type) {
     font-size: 2rem;
     border: solid 1px var(--color-primary);
     border-radius: 50%;
-    margin: 3rem;
+    margin: 0.5rem;
 
     background-color: var(--color-background);
     color: var(--color-primary);
