@@ -579,7 +579,7 @@ footer {
 /* 5.3 Social Links */
 /* ====================== */
 .social-links {
-    z-index: 1;
+    z-index: 4;
     position: fixed;
     top: 0;
     left: 0;
@@ -666,12 +666,30 @@ footer {
 /* ==================================================== */
 /* 6. State Classes*/
 /* ==================================================== */
+/* Used to made mobile navigation appear */
 .flex {
     display: flex !important;
+}
+/* Prevents scrolling when mobile navigation is on screen */
+.hiddenY {
+    overflow-y: hidden !important;
 }
 
 .selected {
     color: var(--color-primary-dark);
+}
+
+/* When the menu is active, change the lines to form an 'X' */
+.floating-button__center.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.floating-button__center.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.floating-button__center.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
 .noselect {
