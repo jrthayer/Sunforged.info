@@ -30,6 +30,8 @@ html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
     font-family: Cormorant, serif;
+    scrollbar-color: var(--color-background) var(--color-primary-dark);
+    scrollbar-width: thin;
 }
 
 h2 {
@@ -37,6 +39,9 @@ h2 {
     font-size: 3rem;
     text-transform: uppercase;
     font-family: Cormorant, serif;
+}
+
+body {
 }
 
 /* ==================================================== */
@@ -631,7 +636,7 @@ footer {
     display: flex;
     align-items: center;
 
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 
     font-weight: 700;
 }
@@ -643,17 +648,11 @@ footer {
 }
 
 .page-navigation a:first-child {
-    border-top-left-radius: 30%;
-    border-bottom-left-radius: 30%;
     border-left-width: 10px;
-    padding-left: 2rem;
 }
 
 .page-navigation a:last-child {
-    border-top-right-radius: 30%;
-    border-bottom-right-radius: 30%;
     border-right-width: 10px;
-    padding-right: 2rem;
 }
 
 /* .page-navigation a::after {
